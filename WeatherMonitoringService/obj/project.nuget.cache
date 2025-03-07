@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "ARqtzjF+oJ0=",
+  "success": true,
+  "projectFilePath": "D:\\WeatherMonitoringService\\WeatherMonitoringService\\WeatherMonitoringService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ruba\\.nuget\\packages\\fluentvalidation\\12.0.0-preview1\\fluentvalidation.12.0.0-preview1.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.0-preview.1.25080.5\\microsoft.extensions.configuration.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.0-preview.1.25080.5\\microsoft.extensions.configuration.abstractions.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.0-preview.1.25080.5\\microsoft.extensions.configuration.binder.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\10.0.0-preview.1.25080.5\\microsoft.extensions.configuration.fileextensions.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.0-preview.1.25080.5\\microsoft.extensions.configuration.json.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.2\\microsoft.extensions.dependencyinjection.9.0.2.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.2\\microsoft.extensions.dependencyinjection.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.0-preview.1.25080.5\\microsoft.extensions.fileproviders.abstractions.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\10.0.0-preview.1.25080.5\\microsoft.extensions.fileproviders.physical.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\10.0.0-preview.1.25080.5\\microsoft.extensions.filesystemglobbing.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.logging\\9.0.2\\microsoft.extensions.logging.9.0.2.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.2\\microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.options\\9.0.2\\microsoft.extensions.options.9.0.2.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.0-preview.1.25080.5\\microsoft.extensions.primitives.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\system.io.pipelines\\10.0.0-preview.1.25080.5\\system.io.pipelines.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\system.text.encodings.web\\10.0.0-preview.1.25080.5\\system.text.encodings.web.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\Ruba\\.nuget\\packages\\system.text.json\\10.0.0-preview.1.25080.5\\system.text.json.10.0.0-preview.1.25080.5.nupkg.sha512"
+  ],
+  "logs": []
+}
