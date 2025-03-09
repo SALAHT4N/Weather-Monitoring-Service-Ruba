@@ -29,5 +29,4 @@ public class WeatherDataFactory : IWeatherDataFactory
         }
         return _parser.ParseWeatherInput(input);
     }
-    
 }

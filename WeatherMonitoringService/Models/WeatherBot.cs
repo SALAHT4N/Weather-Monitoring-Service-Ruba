@@ -9,5 +9,4 @@ public class WeatherBot
     
     [JsonPropertyName("message")]
     public required string Message { get; set; }
-    
 }
