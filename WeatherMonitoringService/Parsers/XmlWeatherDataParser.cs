@@ -4,7 +4,7 @@ using WeatherMonitoringService.Parsers.Exceptions;
 
 namespace WeatherMonitoringService.Parsers;
 
-public class XmlWeatherDataParser : IWeatherDataParser
+public class XmlWeatherDataParser(WeatherDataValidator validator) : IWeatherDataParser
 {
     public WeatherData ParseWeatherInput(string input)
     {
@@ -20,7 +20,6 @@ public class XmlWeatherDataParser : IWeatherDataParser
             Humidity = Convert.ToDecimal(root.Element("Humidity")?.Value ?? throw new InvalidXmlFormatException("Missing Humidity element."))
         };
 
-        var validator = new WeatherDataValidator();
         var result = validator.Validate(weatherData);
         if (!result.IsValid)
         {

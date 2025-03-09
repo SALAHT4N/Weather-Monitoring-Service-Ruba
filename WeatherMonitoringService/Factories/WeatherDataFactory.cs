@@ -4,7 +4,7 @@ using WeatherMonitoringService.Parsers;
 
 namespace WeatherMonitoringService.Factories;
 
-public class WeatherDataFactory : IWeatherDataFactory
+public class WeatherDataFactory (WeatherDataValidator validator) : IWeatherDataFactory
 {
     private IWeatherDataParser? _parser;
 
@@ -17,11 +17,11 @@ public class WeatherDataFactory : IWeatherDataFactory
 
         if (input.Trim().StartsWith('{'))
         {
-            _parser = new JsonWeatherDataParser();
+            _parser = new JsonWeatherDataParser(validator);
         }
         else if (input.Trim().StartsWith('<'))
         {
-            _parser = new XmlWeatherDataParser();
+            _parser = new XmlWeatherDataParser(validator);
         }
         else
         {

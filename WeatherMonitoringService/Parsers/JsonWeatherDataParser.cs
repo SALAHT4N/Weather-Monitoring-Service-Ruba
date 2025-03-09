@@ -4,7 +4,7 @@ using WeatherMonitoringService.Parsers.Exceptions;
 
 namespace WeatherMonitoringService.Parsers;
 
-public class JsonWeatherDataParser : IWeatherDataParser
+public class JsonWeatherDataParser(WeatherDataValidator validator) : IWeatherDataParser
 {
     public WeatherData ParseWeatherInput(string input)
     {
@@ -14,7 +14,6 @@ public class JsonWeatherDataParser : IWeatherDataParser
             if (weatherData is null)
                 throw new InvalidJsonFormatException("Invalid JSON: Data is empty or null");
 
-            var validator = new WeatherDataValidator();
             var result = validator.Validate(weatherData);
             if (!result.IsValid)
             {
