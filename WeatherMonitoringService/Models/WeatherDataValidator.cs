@@ -15,6 +15,7 @@ public class WeatherDataValidator : AbstractValidator<WeatherData>
             .WithMessage("Please specify a valid location");
         
         RuleFor(weatherData => weatherData.Humidity)
-            .NotEmpty().WithMessage("Please specify a valid humidity");
+            .NotEmpty()
+            .WithMessage("Please specify a valid humidity");
     }
 }
