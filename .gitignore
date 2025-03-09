@@ -14,13 +14,6 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# Ignore build outputs
-bin/
-obj/
-
-# Ignore NuGet packages
-*.nupkg
-packages/
 
 # Build results
 [Dd]ebug/
@@ -609,5 +602,47 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+
+# Ignore Debug and Release folders
+Debug/
+Release/
+
+# Ignore Visual Studio cache
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.ilk
+
+# Ignore logs and temporary files
+*.log
+*.tlog
+*.temp
+
+# Ignore Rider and JetBrains files
+.idea/
+*.iml
+
+# Ignore compiled DLLs and EXEs
+*.exe
+*.dll
+*.pdb
+
+# Ignore publish folder
+publish/
+out/
+
+# Ignore auto-generated files
+GeneratedFiles/
+
 
 # End of https://www.toptal.com/developers/gitignore/api/rider,aspnetcore,csharp
