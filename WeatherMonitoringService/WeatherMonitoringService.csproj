@@ -14,5 +14,10 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
     </ItemGroup>
+    <ItemGroup>
+      <None Update="configurations.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 
 </Project>

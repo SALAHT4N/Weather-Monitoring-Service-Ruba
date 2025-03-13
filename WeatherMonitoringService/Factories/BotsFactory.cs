@@ -11,7 +11,7 @@ public class BotsFactory
         List<IWeatherObserver> bots = [];
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(@"D:\WeatherMonitoringService\WeatherMonitoringService\configurations.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("./configurations.json", optional: false, reloadOnChange: true)
             .Build();
         
         var rainBot = configuration.GetSection("RainBot").Get<RainBot>();
