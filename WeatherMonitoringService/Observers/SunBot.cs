@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 using WeatherMonitoringService.Models;
 using WeatherMonitoringService.Observables;
 
@@ -6,14 +7,26 @@ namespace WeatherMonitoringService.Observers;
 
 public class SunBot : WeatherBot, IWeatherObserver
 {
+    private readonly ILogger<SunBot> _logger;
+
+    public SunBot(ILogger<SunBot> logger)
+    {
+        _logger = logger;
+    }
+
+    public SunBot()
+    {
+        
+    }
+    
     [JsonPropertyName("temperatureThreshold")]
-    public decimal TemperatureThreshold { get; set; }
+    public decimal TemperatureThreshold { get; init; }
    
     public void Update(WeatherData weatherData)
     {
         if (Enabled && TemperatureThreshold < weatherData.Temperature)
         {
-            Console.WriteLine(Message);
+            _logger.LogInformation(Message);
         }
     }
 }

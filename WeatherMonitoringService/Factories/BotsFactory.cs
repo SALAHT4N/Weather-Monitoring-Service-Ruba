@@ -1,12 +1,13 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using WeatherMonitoringService.Observables;
 using WeatherMonitoringService.Observers;
 
 namespace WeatherMonitoringService.Factories;
 
-public class BotsFactory
+public class BotsFactory (ILoggerFactory loggerFactory)
 {
-    public static List<IWeatherObserver> GetBots()
+    public List<IWeatherObserver> GetBots()
     {
         List<IWeatherObserver> bots = [];
         var configuration = new ConfigurationBuilder()
@@ -14,13 +15,36 @@ public class BotsFactory
             .AddJsonFile("./configurations.json", optional: false, reloadOnChange: true)
             .Build();
         
-        var rainBot = configuration.GetSection("RainBot").Get<RainBot>();
-        var sunBot = configuration.GetSection("SunBot").Get<SunBot>();
-        var snowBot = configuration.GetSection("SnowBot").Get<SnowBot>();
-        if (rainBot is null || sunBot is null || snowBot is null)
+        var rainBotConfig = configuration.GetSection("rainBot").Get<RainBot>();
+        var sunBotConfig = configuration.GetSection("SunBot").Get<SunBot>();
+        var snowBotConfig = configuration.GetSection("SnowBot").Get<SnowBot>();
+
+        if (rainBotConfig is null || sunBotConfig is null || snowBotConfig is null)
         {
             throw new NullReferenceException("Invalid configuration");
         }
+
+        var rainBot = new RainBot(loggerFactory.CreateLogger<RainBot>())
+        {
+            Enabled = rainBotConfig.Enabled,
+            Message = rainBotConfig.Message,
+            HumidityThreshold = rainBotConfig.HumidityThreshold
+        };
+
+        var sunBot = new SunBot(loggerFactory.CreateLogger<SunBot>())
+        {
+            Enabled = sunBotConfig.Enabled,
+            Message = sunBotConfig.Message,
+            TemperatureThreshold = sunBotConfig.TemperatureThreshold
+        };
+
+        var snowBot = new SnowBot(loggerFactory.CreateLogger<SnowBot>())
+        {
+            Enabled = snowBotConfig.Enabled,
+            Message = snowBotConfig.Message,
+            TemperatureThreshold = snowBotConfig.TemperatureThreshold
+        };
+        
         bots.Add(rainBot);
         bots.Add(sunBot);
         bots.Add(snowBot);
