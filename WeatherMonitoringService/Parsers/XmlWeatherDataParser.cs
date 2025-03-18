@@ -27,6 +27,14 @@ public class XmlWeatherDataParser(WeatherDataValidator validator) : IWeatherData
 
     public bool IsParserInputFormatValid(string input)
     {
-        return input.Trim().StartsWith('<');
+        try
+        {
+            return XDocument.Parse(input).Root is not null;
+        }
+        catch
+        {
+            return false;
+        }
+            
     }
 }

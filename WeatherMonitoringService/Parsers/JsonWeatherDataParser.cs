@@ -26,6 +26,13 @@ public class JsonWeatherDataParser(WeatherDataValidator validator) : IWeatherDat
 
     public bool IsParserInputFormatValid(string input)
     {
-        return input.Trim().StartsWith('{');
+        try
+        {
+            return JsonSerializer.Deserialize<WeatherData>(input) is not null;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

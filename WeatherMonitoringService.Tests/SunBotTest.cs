@@ -10,7 +10,7 @@ using Observers;
 
 public class SunBotTest
 {
-    private readonly Fixture _fixture = new();
+    private readonly IFixture _fixture;
     private readonly Mock<ILogger<SunBot>> _loggerMock = new();
     private readonly WeatherData _weatherData;
 
@@ -22,6 +22,8 @@ public class SunBotTest
             Temperature = 20,
             Humidity = 60 
         };
+        
+        _fixture = new Fixture();
     }
 
 

@@ -10,7 +10,7 @@ using Observers;
 
 public class SnowBotTest
 {
-    private readonly Fixture _fixture = new();
+    private readonly IFixture _fixture;
     private readonly Mock<ILogger<SnowBot>> _loggerMock = new();
     private readonly WeatherData _weatherData;
 
@@ -22,6 +22,8 @@ public class SnowBotTest
             Temperature = 20,
             Humidity = 60 
         };
+        
+        _fixture = new Fixture();
     }
 
 

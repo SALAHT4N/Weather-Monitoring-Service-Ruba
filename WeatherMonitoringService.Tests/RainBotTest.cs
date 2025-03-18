@@ -8,7 +8,7 @@ namespace WeatherMonitoringService.Tests;
 
 public class RainBotTest
 {
-    private readonly Fixture _fixture = new();
+    private readonly IFixture _fixture;
     private readonly Mock<ILogger<RainBot>> _logger = new();
     private readonly WeatherData _weatherData;
 
@@ -20,6 +20,8 @@ public class RainBotTest
             Temperature = 20,
             Humidity = 60 
         };
+         
+         _fixture = new Fixture();
     }
 
 
