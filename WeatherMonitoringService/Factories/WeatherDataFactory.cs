@@ -4,29 +4,18 @@ using WeatherMonitoringService.Parsers;
 
 namespace WeatherMonitoringService.Factories;
 
-public class WeatherDataFactory (WeatherDataValidator validator) : IWeatherDataFactory
+public class WeatherDataFactory (List<IWeatherDataParser> parsers) : IWeatherDataFactory
 {
-    private IWeatherDataParser? _parser;
 
     public WeatherData CreateWeatherData(string input)
     {
-        if (string.IsNullOrWhiteSpace(input))
+        var parser = parsers.FirstOrDefault(p => p.IsParserInputFormatValid(input));
+        
+        if (parser is null)
         {
-            throw new InvalidOperationException("Input cannot be null or empty.");
+            throw new UnsupportedFormatException("Input format is not supported");
         }
-
-        if (input.Trim().StartsWith('{'))
-        {
-            _parser = new JsonWeatherDataParser(validator);
-        }
-        else if (input.Trim().StartsWith('<'))
-        {
-            _parser = new XmlWeatherDataParser(validator);
-        }
-        else
-        {
-            throw new UnsupportedFormatException("Unsupported weather data format.");
-        }
-        return _parser.ParseWeatherInput(input);
+        
+        return parser.ParseWeatherInput(input);
     }
 }

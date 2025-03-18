@@ -1,4 +1,5 @@
 using System.Text.Json;
+using FluentValidation;
 using WeatherMonitoringService.Models;
 using WeatherMonitoringService.Parsers.Exceptions;
 
@@ -14,16 +15,17 @@ public class JsonWeatherDataParser(WeatherDataValidator validator) : IWeatherDat
             if (weatherData is null)
                 throw new InvalidJsonFormatException("Invalid JSON: Data is empty or null");
 
-            var result = validator.Validate(weatherData);
-            if (!result.IsValid)
-            {
-                throw new InvalidJsonFormatException($"Invalid weather data: {result.Errors.FirstOrDefault()?.ErrorMessage}");
-            }
+            validator.ValidateAndThrow(weatherData);
             return weatherData;
         }
         catch (JsonException ex)
         {
             throw new InvalidJsonFormatException($"Invalid JSON format: {ex.Message}");
         }
+    }
+
+    public bool IsParserInputFormatValid(string input)
+    {
+        return input.Trim().StartsWith('{');
     }
 }

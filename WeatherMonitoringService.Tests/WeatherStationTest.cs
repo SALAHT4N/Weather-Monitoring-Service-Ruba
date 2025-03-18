@@ -45,9 +45,9 @@ public class WeatherStationTest
     {
         // Arrange
         var fixture = new Fixture();
-        var mockObserver1 = new Mock<IWeatherObserver>();
-        var mockObserver2 = new Mock<IWeatherObserver>();
-        var observers = new List<IWeatherObserver> { mockObserver1.Object, mockObserver2.Object };
+        var obs1 = new Mock<IWeatherObserver>();
+        var obs2 = new Mock<IWeatherObserver>();
+        var observers = new List<IWeatherObserver> { obs1.Object, obs2.Object };
         var weatherStation = new WeatherStation(observers);
         var weatherData = fixture.Create<WeatherData>();
 
@@ -55,7 +55,7 @@ public class WeatherStationTest
         weatherStation.Notify(weatherData);
 
         // Assert
-        mockObserver1.Verify(o => o.Update(weatherData), Times.Once);
-        mockObserver2.Verify(o => o.Update(weatherData), Times.Once);
+        obs1.Verify(o => o.Update(weatherData), Times.Once);
+        obs2.Verify(o => o.Update(weatherData), Times.Once);
     }
 }

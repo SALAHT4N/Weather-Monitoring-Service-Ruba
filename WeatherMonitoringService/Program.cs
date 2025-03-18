@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using WeatherMonitoringService.Factories;
 using WeatherMonitoringService.Models;
 using WeatherMonitoringService.Observables;
+using WeatherMonitoringService.Parsers;
 
 namespace WeatherMonitoringService;
 
@@ -10,31 +11,53 @@ class Program
 {
     static void Main(string[] args)
     {
-        var services = new ServiceCollection();
-        services.AddLogging();
-        services.AddSingleton<BotsFactory>();
-        services.AddLogging(configure => configure.AddConsole().SetMinimumLevel(LogLevel.Information));
-        services.AddSingleton<WeatherDataValidator>();
+        var serviceProvider = ConfigureServices();
+
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        var botFactory = serviceProvider.GetRequiredService<BotsFactory>();
+        var weatherDataFactory = serviceProvider.GetRequiredService<IWeatherDataFactory>();
+
+        var observers = botFactory.GetBots();
 
         try
         {
-            var weatherDataValidator = services.BuildServiceProvider().GetService<WeatherDataValidator>();
-            var botFactory = services.BuildServiceProvider().GetService<BotsFactory>();
-            var observers = botFactory.GetBots();
-            
             Console.WriteLine("Weather monitoring service started.");
             Console.WriteLine("Enter the weather data:");
             var input = Console.ReadLine();
-            IWeatherDataFactory weatherDataFactory = new WeatherDataFactory(weatherDataValidator);
-            if (string.IsNullOrEmpty(input)) return;
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                logger.LogWarning("No input provided.");
+                return;
+            }
+
             var weatherData = weatherDataFactory.CreateWeatherData(input);
-      
-            IWeatherStation weatherStation = new WeatherStation(observers);
+            var weatherStation = new WeatherStation(observers);
             weatherStation.Notify(weatherData);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            logger.LogError(ex, "An error occurred in the weather monitoring service.");
         }
+    }
+
+    private static ServiceProvider ConfigureServices()
+    {
+        var services = new ServiceCollection();
+
+        services.AddLogging(configure => configure.AddConsole().SetMinimumLevel(LogLevel.Information));
+
+        services.AddSingleton<WeatherDataValidator>();
+        services.AddSingleton<BotsFactory>();
+
+        services.AddSingleton<IWeatherDataParser, JsonWeatherDataParser>();
+        services.AddSingleton<IWeatherDataParser, XmlWeatherDataParser>();
+        services.AddSingleton<IWeatherDataFactory, WeatherDataFactory>(sp =>
+        {
+            var parsers = sp.GetServices<IWeatherDataParser>().ToList();
+            return new WeatherDataFactory(parsers);
+        });
+
+        return services.BuildServiceProvider();
     }
 }

@@ -7,7 +7,11 @@ namespace WeatherMonitoringService.Observers;
 
 public class SnowBot : WeatherBot, IWeatherObserver
 {
+    [JsonPropertyName("temperatureThreshold")]
+    public decimal TemperatureThreshold { get; init; }
+
     private readonly ILogger<SnowBot> _logger;
+    
     public SnowBot()
     {
         
@@ -17,14 +21,12 @@ public class SnowBot : WeatherBot, IWeatherObserver
     {
         _logger = logger;
     }
-    [JsonPropertyName("temperatureThreshold")]
-    public decimal TemperatureThreshold { get; init; }
 
     public void Update(WeatherData weatherData)
     {
         if (Enabled && TemperatureThreshold > weatherData.Temperature)
         {
-            _logger.LogInformation(Message);
+            _logger.LogInformation("{Message}",Message);
         }
     }
 }

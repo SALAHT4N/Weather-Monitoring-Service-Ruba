@@ -9,7 +9,7 @@ namespace WeatherMonitoringService.Tests;
 public class RainBotTest
 {
     private readonly Fixture _fixture = new();
-    private readonly Mock<ILogger<RainBot>> _loggerMock = new();
+    private readonly Mock<ILogger<RainBot>> _logger = new();
     private readonly WeatherData _weatherData;
 
     public RainBotTest()
@@ -27,7 +27,7 @@ public class RainBotTest
     public void RainObserverTest_ShouldLogMessage_WhenHumidityExceedsThreshold()
     {
         var message = _fixture.Create<string>();
-        var rainBot = new RainBot(_loggerMock.Object)
+        var rainBot = new RainBot(_logger.Object)
         {
             Enabled = true,
             Message = message,
@@ -36,7 +36,7 @@ public class RainBotTest
 
         rainBot.Update(_weatherData);
 
-        _loggerMock.Verify(
+        _logger.Verify(
             x => x.Log(
                 LogLevel.Information,
                 It.IsAny<EventId>(),
@@ -50,7 +50,7 @@ public class RainBotTest
     public void RainObserverTest_ShouldNotLog_WhenHumidityBelowThreshold()
     {
         var message = _fixture.Create<string>();
-        var rainBot = new RainBot(_loggerMock.Object)
+        var rainBot = new RainBot(_logger.Object)
         {
             Enabled = true,
             Message = message,
@@ -59,7 +59,7 @@ public class RainBotTest
         
         rainBot.Update(_weatherData);
 
-        _loggerMock.Verify(
+        _logger.Verify(
             x => x.Log(It.IsAny<LogLevel>(),
                 It.IsAny<EventId>(), 
                 It.IsAny<It.IsAnyType>(),
