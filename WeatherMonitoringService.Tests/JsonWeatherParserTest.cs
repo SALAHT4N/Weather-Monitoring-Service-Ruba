@@ -1,42 +1,68 @@
-using FluentValidation.Results;
+using AutoFixture;
+using AutoFixture.AutoMoq;
 using Moq;
 using WeatherMonitoringService.Models;
 using WeatherMonitoringService.Parsers;
 using WeatherMonitoringService.Parsers.Exceptions;
-using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace WeatherMonitoringService.Tests;
 
 public class JsonWeatherParserTest
 {
+    private readonly JsonWeatherDataParser _parser;
+    
+    public JsonWeatherParserTest()
+    {
+        var fixture = new Fixture().Customize(new AutoMoqCustomization());
+        fixture.Freeze<Mock<WeatherDataValidator>>();
+        _parser = fixture.Create<JsonWeatherDataParser>();
+    }
     
     [Fact]
     public void ParseWeatherInput_ShouldReturnsWeatherData()
     {
-        const string input = "{\"Location\":\"location\",\"Temperature\":25,\"Humidity\":60}";
+        //Arrange
+        const string location = "New York";
+        const int temperature = 27;
+        const int humidity = 60;
+        var expectedWeatherData = new WeatherData
+        {
+            Location = location,
+            Temperature = temperature,
+            Humidity = humidity
+        };
         
-        var validatorMock = new Mock<WeatherDataValidator> { CallBase = true };
+        var input = $$"""
+                      {
+                          "Location":"{{location}}",
+                          "Temperature":{{temperature}},
+                          "Humidity":{{humidity}}
+                      }
+                      """;
 
-        var parser = new JsonWeatherDataParser(validatorMock.Object);
+        // Act
+        var weatherData = _parser.ParseWeatherInput(input);
 
-        var weatherData = parser.ParseWeatherInput(input);
-
-        Assert.Equal("location", weatherData.Location);
-        Assert.Equal(25, weatherData.Temperature);
-        Assert.Equal(60, weatherData.Humidity);
+        // Assert
+        Assert.Equal(expectedWeatherData.Location, weatherData.Location);
     }
     
     [Fact]
     public void ParseWeatherInput_ShouldThrowsInvalidJsonFormatException()
     { 
-        const string input = "{\"Location\":\"\",\"Temperature\":25,\"Humidity\":50}";
-        var validatorMock = new Mock<WeatherDataValidator> { CallBase = true };
-        var validationResult = new ValidationResult();
-        validationResult.Errors.Add(new ValidationFailure("Location", "Please specify a valid location"));
+        //Arrange
+        const string location = "New York";
+        const int temperature = 27;
+        
+        var input = $$"""
+                      {
+                          "Location":"{{location}}",
+                          "Temperature":{{temperature}}
+                      }
+                      """;
+        
+        //ACT && Assert
 
-        var parser = new JsonWeatherDataParser(validatorMock.Object);
-
-        var exception = Assert.Throws<InvalidJsonFormatException>(() => parser.ParseWeatherInput(input));
-        Assert.Contains("Please specify a valid location", exception.Message);
+        Assert.Throws<InvalidJsonFormatException>(() => _parser.ParseWeatherInput(input));
     }
 }

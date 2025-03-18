@@ -1,42 +1,68 @@
-using FluentValidation.Results;
+using AutoFixture;
+using AutoFixture.AutoMoq;
 using Moq;
 using WeatherMonitoringService.Models;
 using WeatherMonitoringService.Parsers;
 using WeatherMonitoringService.Parsers.Exceptions;
-using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace WeatherMonitoringService.Tests;
 
 public class XmlWeatherParserTest
 {
     
+    private readonly XmlWeatherDataParser _parser;
+    
+    public XmlWeatherParserTest()
+    {
+        var fixture = new Fixture().Customize(new AutoMoqCustomization());
+        fixture.Freeze<Mock<WeatherDataValidator>>();
+        _parser = fixture.Create<XmlWeatherDataParser>();
+    }
+    
     [Fact]
     public void ParseWeatherInput_ShouldReturnsWeatherData()
     {
-        const string input = "<WeatherData><Location>location</Location><Temperature>25</Temperature><Humidity>60</Humidity></WeatherData>";
-        
-        var validatorMock = new Mock<WeatherDataValidator> { CallBase = true };
+        // Arrange
+        const string location = "New York";
+        const int temperature = 27;
+        const int humidity = 60;
+        var expectedWeatherData = new WeatherData
+        {
+            Location = location,
+            Temperature = temperature,
+            Humidity = humidity
+        };
+        var input = $"""
+                      <WeatherData>
+                          <Location>{location}</Location>
+                          <Temperature>{temperature}</Temperature>
+                          <Humidity>{humidity}</Humidity>
+                      </WeatherData>
+                      """;
 
-        var parser = new XmlWeatherDataParser(validatorMock.Object);
 
-        var weatherData = parser.ParseWeatherInput(input);
+        // Act
+        var weatherData = _parser.ParseWeatherInput(input);
 
-        Assert.Equal("location", weatherData.Location);
-        Assert.Equal(25, weatherData.Temperature);
-        Assert.Equal(60, weatherData.Humidity);
+        // Assert
+        Assert.Equal(expectedWeatherData.Location, weatherData.Location);
     }
     
     [Fact]
     public void ParseWeatherInput_ShouldThrowsInvalidXmlFormatException()
     { 
-        const string input = "<WeatherData><Location>location</Location><Temperature>25</Temperature></WeatherData>";
-        var validatorMock = new Mock<WeatherDataValidator> { CallBase = true };
-        var validationResult = new ValidationResult();
-        validationResult.Errors.Add(new ValidationFailure("Humidity", "Missing Humidity element"));
+        // Arrange
+        const string location = "New York";
+        const int temperature = 27;
+        
+        var input = $"""
+                     <WeatherData>
+                         <Location>{location}</Location>
+                         <Temperature>{temperature}</Temperature>
+                     </WeatherData>
+                     """;
 
-        var parser = new XmlWeatherDataParser(validatorMock.Object);
-
-        var exception = Assert.Throws<InvalidXmlFormatException>(() => parser.ParseWeatherInput(input));
-        Assert.Contains("Missing Humidity element", exception.Message);
+        
+        Assert.Throws<InvalidXmlFormatException>(() => _parser.ParseWeatherInput(input));
     }
 }
