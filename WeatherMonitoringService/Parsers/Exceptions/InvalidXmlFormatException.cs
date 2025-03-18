@@ -1,5 +1,3 @@
 namespace WeatherMonitoringService.Parsers.Exceptions;
 
-public class InvalidXmlFormatException (string message) : Exception (message)
-{
-}
+public class InvalidXmlFormatException(string message) : Exception(message);
