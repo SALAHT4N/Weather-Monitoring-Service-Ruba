@@ -10,7 +10,7 @@ public class RainBot : WeatherBot, IWeatherObserver
     [JsonPropertyName("humidityThreshold")]
     public decimal HumidityThreshold { get; init; }
     
-    private readonly ILogger<RainBot> _logger;
+    private readonly ILogger<RainBot>? _logger;
     
     public RainBot()
     {
@@ -26,7 +26,7 @@ public class RainBot : WeatherBot, IWeatherObserver
     {
         if (Enabled && HumidityThreshold < weatherData.Humidity)
         {
-            _logger.LogInformation("{Message}",Message);
+            _logger?.LogInformation("{Message}",Message);
         }
     }
 }

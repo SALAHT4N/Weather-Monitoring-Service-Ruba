@@ -14,17 +14,16 @@ public class RainBotTest
 
     public RainBotTest()
     {
-         _weatherData = new WeatherData
+        _fixture = new Fixture();
+
+        _weatherData = new WeatherData
         {
             Location = _fixture.Create<string>(),
             Temperature = 20,
-            Humidity = 60 
+            Humidity = 60
         };
-         
-         _fixture = new Fixture();
     }
-
-
+    
     [Fact]
     public void RainObserverTest_ShouldLogMessage_WhenHumidityExceedsThreshold()
     {
