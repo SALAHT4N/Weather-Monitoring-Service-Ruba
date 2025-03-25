@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMonitoringService", "WeatherMonitoringService\WeatherMonitoringService.csproj", "{0FC56178-4551-4570-9CF4-B96FC02A1CBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMonitoringService.Tests", "WeatherMonitoringService.Tests\WeatherMonitoringService.Tests.csproj", "{1A22E307-7DB7-434E-8BD7-AFCE2C940F49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FC56178-4551-4570-9CF4-B96FC02A1CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC56178-4551-4570-9CF4-B96FC02A1CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC56178-4551-4570-9CF4-B96FC02A1CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC56178-4551-4570-9CF4-B96FC02A1CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A22E307-7DB7-434E-8BD7-AFCE2C940F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A22E307-7DB7-434E-8BD7-AFCE2C940F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A22E307-7DB7-434E-8BD7-AFCE2C940F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A22E307-7DB7-434E-8BD7-AFCE2C940F49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
