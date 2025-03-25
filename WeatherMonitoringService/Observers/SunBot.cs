@@ -10,7 +10,7 @@ public class SunBot : WeatherBot, IWeatherObserver
     [JsonPropertyName("temperatureThreshold")]
     public decimal TemperatureThreshold { get; init; }
     
-    private readonly ILogger<SunBot> _logger;
+    private readonly ILogger<SunBot>? _logger;
 
     public SunBot(ILogger<SunBot> logger)
     {
@@ -26,7 +26,7 @@ public class SunBot : WeatherBot, IWeatherObserver
     {
         if (Enabled && TemperatureThreshold < weatherData.Temperature)
         {
-            _logger.LogInformation("{Message}",Message);
+            _logger?.LogInformation("{Message}",Message);
         }
     }
 }
