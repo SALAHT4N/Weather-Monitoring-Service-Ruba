@@ -62,11 +62,7 @@ class Program
 
         services.AddSingleton<IWeatherDataParser, JsonWeatherDataParser>();
         services.AddSingleton<IWeatherDataParser, XmlWeatherDataParser>();
-        services.AddSingleton<IWeatherDataFactory, WeatherDataFactory>(sp =>
-        {
-            var parsers = sp.GetServices<IWeatherDataParser>().ToList();
-            return new WeatherDataFactory(parsers);
-        });
+
 
         return services.BuildServiceProvider();
     }
