@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WeatherMonitoringService.Factories;
 using WeatherMonitoringService.Models;
@@ -48,7 +49,16 @@ class Program
         services.AddLogging(configure => configure.AddConsole().SetMinimumLevel(LogLevel.Information));
 
         services.AddSingleton<WeatherDataValidator>();
-        services.AddSingleton<BotsFactory>();
+        services.AddSingleton<ILoggerFactory, LoggerFactory>();
+        services.AddSingleton(sp =>
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("./configurations.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            return new BotsFactory(sp.GetRequiredService<ILoggerFactory>(), configuration);
+        });
 
         services.AddSingleton<IWeatherDataParser, JsonWeatherDataParser>();
         services.AddSingleton<IWeatherDataParser, XmlWeatherDataParser>();

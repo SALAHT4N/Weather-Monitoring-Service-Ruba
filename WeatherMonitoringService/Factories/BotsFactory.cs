@@ -5,16 +5,12 @@ using WeatherMonitoringService.Observers;
 
 namespace WeatherMonitoringService.Factories;
 
-public class BotsFactory (ILoggerFactory loggerFactory)
+public class BotsFactory (ILoggerFactory loggerFactory, IConfigurationRoot configuration)
 {
     public List<IWeatherObserver> GetBots()
     {
         List<IWeatherObserver> bots = [];
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("./configurations.json", optional: false, reloadOnChange: true)
-            .Build();
-        
+
         var rainBotConfig = configuration.GetSection("rainBot").Get<RainBot>();
         var sunBotConfig = configuration.GetSection("SunBot").Get<SunBot>();
         var snowBotConfig = configuration.GetSection("SnowBot").Get<SnowBot>();
